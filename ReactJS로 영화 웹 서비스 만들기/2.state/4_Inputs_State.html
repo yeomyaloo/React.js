@@ -1,43 +1,69 @@
 <!DOCTYPE html>
 <html lang="ko">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>1_state</title>
-    </head>
-    <body>
-        <div id="root"></div>
-    </body>
-    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script type="text/babel">
-        const root = document.getElementById("root");
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1_state</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    const root = document.getElementById("root");
    
         function App() {
-            const [minutes,setMinutes] = React.useState();
+            const [amount,setAmount] = React.useState();
+            const [flipped,setFlipped] = React.useState(false);
             const onChange = (event) => {
-                setMinutes(event.target.value);
+                setAmount(event.target.value);
+            };
+            const reset = () => setAmount(0);
+            const OnFlip = () => {
+                reset();
+                setFlipped((current)=> !current);
             };
             return (
             <div>
-                <h1> Super Converter </h1>
-                <label htmlfor="minutes">Minutes</label>
-                <input 
-                    value = {minutes}
-                    id="minutes"
-                    placeholder ="Minutes"
-                    type ="number" 
-                    onChange = {onChange}
-                />
-                <h4>You want to convert {minutes}</h4>
-                <label htmlfor="hours">Hours</label>
-                <input id="hours" placeholder ="Hours" type ="number" />
+                <div>
+                    <h1> Super Converter </h1>
+                    <label htmlfor="minutes">Minutes</label>
+                    <input 
+                        value = {flipped ? amount * 60: amount}
+                        id="minutes"
+                        placeholder ="Minutes"
+                        type ="number" 
+                        onChange = {onChange}
+                        //disabled ={flipped === true}
+                        disabled ={flipped}
+                    />
+                </div>
+                <div>
+                    <label htmlfor="hours">Hours</label>
+                    <input
+                        //삼항연산자로 바꿔서 사용할 예정
+                        //이는 if문을 인라인 형식으로 사용한 것
+                        value = {flipped ? amount : Math.round(amount/60)} 
+                        id="hours" 
+                        placeholder ="Hours"
+                        type ="number"
+                        //disabled ={flipped === false}
+                        disabled ={!flipped}
+                        onChange = {onChange}
+                    />
+                </div>
+                <button onClick={reset}>Reset</button>
+                <button onClick={OnFlip}>Flip</button>
             </div>
             );
         }
         
         ReactDOM.render(<App />, root);
     </script>
+
 </html>
