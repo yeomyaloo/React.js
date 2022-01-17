@@ -16,8 +16,7 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
     const root = document.getElementById("root");
-    
-        function App() {
+    function MinutesToHours() {
             const [amount,setAmount] = React.useState();
             const [flipped,setFlipped] = React.useState(false);
             const onChange = (event) => {
@@ -31,7 +30,7 @@
             return (
             <div>
                 <div>
-                    <h1> Super Converter </h1>
+                    <h3> Minutes 2 Houre </h3>
                     <label htmlfor="minutes">Minutes</label>
                     <input 
                         value = {flipped ? amount * 60: amount}
@@ -61,8 +60,69 @@
                 <button onClick={OnFlip}>Flip</button>
             </div>
             );
+        }    
+    function KmToMiles(){
+        const [amount2, setAmount2] = React.useState();
+        const [flipped2, setFlipped2] = React.useState(false);
+        const reset2 = () => setAmount2(0);
+        const onChange2 = (event) => {
+            setAmount2(event.target.value);
+        };
+        const OnFlip2 = () => {
+            reset2();
+            setFlipped2((current) => !current);
+        }; 
+
+        return (
+            <div>
+                <h3> KM 2 M</h3>
+                <div>
+                    <label htmlfor="Km"> KM </label>
+                    <input 
+                    value = {flipped2 ? Math.round(amount2/1000): amount2}
+                    type="number" 
+                    id="km"
+                    placeholder="kilometer"
+                    onChange = {onChange2}
+                    disabled = {flipped2}
+                    />
+                </div>
+                <div>
+                    <label htmlfor="m">Metre</label>
+                    <input 
+                    value = {flipped2 ? amount2: amount2 * 1000}
+                    type="number" 
+                    id="m"
+                    placeholder="Metre"
+                    onChange = {onChange2}
+                    disabled = {!flipped2}
+                    />
+                </div>
+                <button onClick={reset2}> Reset </button>
+                <button onClick={OnFlip2}> Flip </button>
+            </div>
+        );       
+    }
+    function App() {
+        const [index, setIndex] = React.useState("XX");
+        const onSelect = (event) => {
+            setIndex(event.target.value);
         }
-        
+        return (
+            <div>
+                <h1> Super Converter </h1>
+                <select value={index} onChange={onSelect}>
+                    <option value="XX">Select your units</option>
+                    <option value="0"> Minutes & Houre </option>    
+                    <option value="1"> KM & Miles </option>    
+                </select>
+                <hr/>
+                {index === "XX" ? "Please Select Your units" : null }
+                {index === "0" ? <MinutesToHours />: null}
+                {index ==="1" ? <KmToMiles />:null}
+            </div>
+            );
+        }  
         ReactDOM.render(<App />, root);
     </script>
 
