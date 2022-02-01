@@ -1,21 +1,33 @@
-import React from "react";
-import Home from "./routes/Home";
-import Detail from "./routes/Detail";
 import {
-  Browser as Router,
+  BrowserRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
+import Detail from "./router/Detail";
+import Home from "./router/Home";
+import List from "./router/List";
+import Nav from "./components/Nav"
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
 
 function App() {
   return (
-  <Router> 
-    <Routes>
-      <Route path="movie" element={<Detail />}/>
-      <Route path="/" element ={<Home/>}/>
-    </Routes>
-  </Router>
-  );
+    <RecoilRoot >
+      <Router>
+        <Nav />
+        <Routes>
+          <Route path="/page/:detail/:num" element={<List />} />
+          <Route path="/movie/:id" element={<Detail />} />
+          <Route path={process.env.PUBLIC_URL + "/"} element={<Home />} />
+        </Routes>
+      </Router>
+    </RecoilRoot>
+  )
 }
 
 export default App;
