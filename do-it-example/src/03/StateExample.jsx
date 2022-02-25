@@ -13,6 +13,7 @@ class StateExample extends Component {
     setTimeout(this.handleData, 4000); // 3
   }
   handleData() {
+    
     const data = 'new data';
     const { formData } = this.state; // 4
 
