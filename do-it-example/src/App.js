@@ -1,13 +1,23 @@
 import React, {Component } from 'react';
 import './App.css';
-import ListExample from './03/ListExample';
+import Counter3 from './03/Counter3';
 
 class App extends Component {
-  render() {
+  constructor(props){
+    super(props);
+    this.state = {
+      count : 1,
+    };
+    this.increaseCount = this.increaseCount.bind(this);
+  }
 
+  increaseCount(){
+    this.setState(({count})=>({count: count + 1}));
+  }
+  render() {
     return (
       <div>
-        <ListExample></ListExample>
+        <Counter3 />
       </div>
     );
   }
